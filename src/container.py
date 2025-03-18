@@ -9,7 +9,7 @@ from audio_nest.persistence.i_users_repository import IUsersRepository
 from authentication.authentication_service import AuthenticationService
 from authentication.json_web_token_handler import JsonWebTokenHandler
 from settings import Settings
-from sql_alchemy_persistence.sql_alchemy_session_maker import setup_session_maker
+from sql_alchemy_persistence.sql_alchemy_session_maker_handler import handle_session_maker
 from sql_alchemy_persistence.sql_alchemy_users_repository import SqlAlchemyUsersRepository
 
 
@@ -17,7 +17,7 @@ class Container(DeclarativeContainer):
     configuration: Configuration = Configuration(pydantic_settings=[Settings()])
     logging: Resource[None] = Resource(logging.config.dictConfig, config=configuration.logging_config)
     session_maker: Resource[async_sessionmaker[AsyncSession]] = Resource(
-        setup_session_maker,
+        handle_session_maker,
         database_path=configuration.database_path
     )
     json_web_token_handler: Factory[JsonWebTokenHandler] = Factory(

@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine, AsyncSession, a
 from sql_alchemy_persistence.domain.sql_alchemy_base import SqlAlchemyBase
 
 
-async def setup_session_maker(database_path: Path) -> AsyncGenerator[async_sessionmaker[AsyncSession], None]:
+async def handle_session_maker(database_path: Path) -> AsyncGenerator[async_sessionmaker[AsyncSession], None]:
     database_path.parent.mkdir(parents=True, exist_ok=True)
     engine: AsyncEngine = create_async_engine(f'sqlite+aiosqlite:///{database_path.resolve()}')
     session_maker: async_sessionmaker[AsyncSession] = async_sessionmaker(bind=engine, expire_on_commit=False)
