@@ -11,8 +11,8 @@ from audio_nest.use_cases.videos_getter import VideosGetter
 from authentication.authentication_service import AuthenticationService
 from authentication.json_web_token_handler import JsonWebTokenHandler
 from settings import Settings
-from sql_alchemy_persistence.sql_alchemy_session_maker_handler import handle_session_maker
-from sql_alchemy_persistence.sql_alchemy_users_repository import SqlAlchemyUsersRepository
+from sql.sql_session_maker_handler import handle_sql_session_maker
+from sql.sql_users_repository import SqlUsersRepository
 from youtube.youtube_videos_repository import YoutubeVideosRepository
 
 
@@ -22,13 +22,13 @@ class Container(DeclarativeContainer):
 
     # Resources
     logging: Resource[None] = Resource(logging.config.dictConfig, config=configuration.logging_config)
-    session_maker: Resource[async_sessionmaker[AsyncSession]] = Resource(
-        handle_session_maker,
+    sql_session_maker: Resource[async_sessionmaker[AsyncSession]] = Resource(
+        handle_sql_session_maker,
         database_path=configuration.database_path
     )
 
     # Services
-    users_repository: Factory[IUsersRepository] = Factory(SqlAlchemyUsersRepository, session_maker=session_maker)
+    users_repository: Factory[IUsersRepository] = Factory(SqlUsersRepository, sql_session_maker=sql_session_maker)
     videos_repository: Factory[IVideosRepository] = Factory(
         YoutubeVideosRepository,
         max_results=configuration.youtube_search_max_results

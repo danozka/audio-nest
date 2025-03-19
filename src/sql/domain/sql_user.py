@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Mapped, mapped_column
 
-from sql_alchemy_persistence.domain.sql_alchemy_base import SqlAlchemyBase
+from sql.domain.sql_base import SqlBase
 
 
-class SqlAlchemyUser(SqlAlchemyBase):
+class SqlUser(SqlBase):
     id: Mapped[str] = mapped_column(nullable=False, primary_key=True)
     email: Mapped[str] = mapped_column(index=True, nullable=False, repr=False)
     hashed_password: Mapped[str] = mapped_column(nullable=False, repr=False)
