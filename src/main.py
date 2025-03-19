@@ -1,8 +1,7 @@
 import logging
-import sys
 from logging import Logger
 
-from api.app import App
+from app import App
 from container import Container
 
 
@@ -18,6 +17,6 @@ if __name__ == '__main__':
         app.run()
     except Exception as ex:
         log.error(f'Exception found while starting application: {ex}')
-        sys.exit(1)
     finally:
         log.info('Application stopped')
+        logging.shutdown()

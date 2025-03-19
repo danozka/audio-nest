@@ -5,8 +5,8 @@ from typing import TypeAlias
 
 from youtube_search import YoutubeSearch
 
+from audio_nest.services.i_videos_repository import IVideosRepository
 from audio_nest.domain.video import Video
-from audio_nest.repositories.i_videos_repository import IVideosRepository
 
 
 YoutubeVideo: TypeAlias = dict[str, str | list[str]]
