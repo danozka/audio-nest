@@ -42,6 +42,6 @@ class App(FastAPI):
 
     @asynccontextmanager
     async def _handle_resources(self, app: FastAPI) -> AsyncGenerator[None, None]:
-        await self._container.init_resources()
+        await self._container.session_maker.init()
         yield
-        await self._container.shutdown_resources()
+        await self._container.session_maker.shutdown()

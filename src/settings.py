@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     json_web_token_algorithm: str = Field(alias='JWT_ALGORITHM', default='HS256')
     json_web_token_expiration_days: int = Field(alias='JWT_ACCESS_TOKEN_EXPIRATION_DAYS', default=7)
     database_path: Path = Field(alias='DATABASE_PATH', default=Path('./data/audio-nest.db'))
+    youtube_search_max_results: int = Field(alias='YOUTUBE_SEARCH_MAX_RESULTS', default=20)
 
     def __init__(self) -> None:
         super().__init__()

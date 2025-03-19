@@ -4,7 +4,7 @@ from logging import Logger
 from passlib.context import CryptContext
 
 from audio_nest.domain.user import User
-from audio_nest.persistence.i_users_repository import IUsersRepository
+from audio_nest.services.i_users_repository import IUsersRepository
 from authentication.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
 from authentication.exceptions.user_already_registered_exception import UserAlreadyRegisteredException
 from authentication.json_web_token_handler import JsonWebTokenHandler

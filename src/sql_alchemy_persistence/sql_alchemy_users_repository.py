@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from audio_nest.domain.user import User
-from audio_nest.persistence.i_users_repository import IUsersRepository
+from audio_nest.services.i_users_repository import IUsersRepository
 from sql_alchemy_persistence.domain.sql_alchemy_user import SqlAlchemyUser
 
 
