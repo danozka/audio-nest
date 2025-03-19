@@ -12,13 +12,19 @@ from authentication.json_web_token_handler import JsonWebTokenHandler
 
 class AuthenticationService:
     _log: Logger = logging.getLogger(__name__)
-    _password_context: CryptContext = CryptContext(schemes=['bcrypt'], deprecated='auto')
     _json_web_token_handler: JsonWebTokenHandler
     _users_repository: IUsersRepository
+    _password_context: CryptContext
 
-    def __init__(self, json_web_token_handler: JsonWebTokenHandler, users_repository: IUsersRepository) -> None:
+    def __init__(
+        self,
+        json_web_token_handler: JsonWebTokenHandler,
+        users_repository: IUsersRepository,
+        password_context: CryptContext = CryptContext(schemes=['bcrypt'], deprecated='auto')
+    ) -> None:
         self._json_web_token_handler = json_web_token_handler
         self._users_repository = users_repository
+        self._password_context = password_context
 
     async def register_user(self, email: str, password: str) -> None:
         self._log.debug(f'Registering user \'{email}\'...')
