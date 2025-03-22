@@ -3,11 +3,12 @@ import logging
 from logging import Logger
 from pathlib import Path
 from typing import Any
+from uuid import uuid4
 
 from yt_dlp import YoutubeDL
 
+from audio_nest.domain.audio import Audio
 from audio_nest.domain.audio_codec import AudioCodec
-from audio_nest.domain.source_audio import SourceAudio
 from audio_nest.services.i_source_audio_repository import ISourceAudioRepository
 
 
@@ -26,18 +27,19 @@ class YoutubeSourceAudioRepository(ISourceAudioRepository):
         self._ffmpeg_path = ffmpeg_path
         self._download_directory_path = download_directory_path
 
-    async def get_audio_from_source(self, source_id: str) -> SourceAudio:
+    async def get_audio_from_source(self, source_id: str) -> Audio:
         self._log.debug(f'Getting audio from YouTube video ID \'{source_id}\'...')
-        youtube_audio: SourceAudio = SourceAudio(
+        audio: Audio = Audio(
+            id=uuid4(),
+            source_id=source_id,
             file_path=self._download_directory_path.joinpath(f'{source_id}.{self._codec}'),
-            codec=self._codec,
             bit_rate_kbps=self._bit_rate_kbps,
-            source_id=source_id
+            codec=self._codec
         )
-        if not youtube_audio.file_path.exists():
+        if not audio.file_path.exists():
             await asyncio.to_thread(self._download_audio_from_youtube, video_id=source_id)
         self._log.debug(f'Audio from YouTube video ID \'{source_id}\' retrieved')
-        return youtube_audio
+        return audio
 
     def _download_audio_from_youtube(self, video_id: str) -> None:
         youtube_downloader_options: dict[str, Any] = {

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from audio_nest.domain.audio import Audio
+from audio_nest.domain.user_audio import Audio
 
 
 class ISourceAudioRepository(ABC):

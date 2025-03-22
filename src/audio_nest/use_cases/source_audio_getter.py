@@ -2,7 +2,7 @@ import logging
 from logging import Logger
 
 from audio_nest.services.i_source_audio_repository import ISourceAudioRepository
-from audio_nest.domain.audio import Audio
+from audio_nest.domain.user_audio import Audio
 
 
 class SourceAudioGetter:
