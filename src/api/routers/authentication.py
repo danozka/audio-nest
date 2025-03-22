@@ -30,7 +30,7 @@ async def register_user(
         log.warning(f'Registration failed for user \'{user_data.username}\': {ex}')
     except Exception as ex:
         log.error(f'Exception found while registering user \'{user_data.username}\': {ex}')
-        raise HTTPException(status_code=500, detail='An unexpected error occurred. Please try again later.')
+        raise HTTPException(status_code=500, detail='An unexpected error occurred while registering user')
 
 
 @router.post('/token')
@@ -55,4 +55,4 @@ async def log_in_for_authentication_token(
         )
     except Exception as ex:
         log.error(f'Exception found while logging user \'{user_data.username}\' in: {ex}')
-        raise HTTPException(status_code=500, detail='An unexpected error occurred. Please try again later.')
+        raise HTTPException(status_code=500, detail='An unexpected error occurred while logging user in')

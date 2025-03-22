@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from uuid import UUID, uuid4
+from uuid import UUID
 
 from audio_nest.domain.audio_codec import AudioCodec
 

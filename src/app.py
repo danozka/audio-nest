@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api import routers
-from api.routers import authentication
+from api.routers import authentication, sources
 from container import Container
 
 
@@ -31,6 +31,7 @@ class App(FastAPI):
             allow_headers=['*']
         )
         self.include_router(authentication.router)
+        self.include_router(sources.router)
 
     def run(self) -> None:
         uvicorn.run(

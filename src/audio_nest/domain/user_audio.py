@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from uuid import UUID, uuid4
+from uuid import UUID
 
 from audio_nest.domain.audio import Audio
 
