@@ -13,7 +13,7 @@ class VideosGetter:
         self._videos_repository = videos_repository
 
     async def get_videos(self, search_query: str) -> list[Video]:
-        self._log.debug(f'Start [funcName](search_query=\'{search_query}\')')
+        self._log.debug(f'Getting videos for search query \'{search_query}\'...')
         result: list[Video] = await self._videos_repository.get_videos(search_query)
-        self._log.debug(f'End [funcName](search_query=\'{search_query}\')')
+        self._log.debug(f'Videos for search query \'{search_query}\' retrieved')
         return result
