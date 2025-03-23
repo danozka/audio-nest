@@ -7,13 +7,16 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from audio_nest.services.i_audio_repository import IAudioRepository
 from audio_nest.services.i_audio_sources_repository import IAudioSourcesRepository
+from audio_nest.services.i_user_audio_repository import IUserAudioRepository
 from audio_nest.services.i_users_repository import IUsersRepository
 from audio_nest.use_cases.audio_getter import AudioGetter
 from audio_nest.use_cases.audio_sources_getter import AudioSourcesGetter
+from audio_nest.use_cases.user_audio_adder import UserAudioAdder
 from authentication.authentication_service import AuthenticationService
 from authentication.json_web_token_handler import JsonWebTokenHandler
 from settings import Settings
 from sql.sql_session_maker_handler import handle_sql_session_maker
+from sql.sql_user_audio_repository import SqlUserAudioRepository
 from sql.sql_users_repository import SqlUsersRepository
 from youtube.youtube_audio_repository import YoutubeAudioRepository
 from youtube.youtube_audio_sources_repository import YoutubeAudioSourcesRepository
@@ -42,6 +45,10 @@ class Container(DeclarativeContainer):
         YoutubeAudioSourcesRepository,
         max_results=configuration.youtube_search_max_results
     )
+    user_audio_repository: Factory[IUserAudioRepository] = Factory(
+        SqlUserAudioRepository,
+        sql_session_maker=sql_session_maker
+    )
     users_repository: Factory[IUsersRepository] = Factory(SqlUsersRepository, sql_session_maker=sql_session_maker)
 
     # Authentication
@@ -63,3 +70,4 @@ class Container(DeclarativeContainer):
         AudioSourcesGetter,
         audio_sources_repository=audio_sources_repository
     )
+    user_audio_adder: Factory[UserAudioAdder] = Factory(UserAudioAdder, user_audio_repository=user_audio_repository)

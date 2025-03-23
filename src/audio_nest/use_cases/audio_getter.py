@@ -13,7 +13,7 @@ class AudioGetter:
         self._audio_repository = audio_repository
 
     async def get_audio_from_source(self, source_id: str) -> Audio:
-        self._log.debug(f'Getting audio from source ID \'{source_id}\'...')
+        self._log.debug(f'Getting audio from source \'{source_id}\'...')
         result: Audio = await self._audio_repository.get_audio_from_source(source_id)
-        self._log.debug(f'Audio from source ID \'{source_id}\' retrieved')
+        self._log.debug(f'Audio from source \'{source_id}\' retrieved')
         return result

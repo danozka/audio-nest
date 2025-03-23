@@ -30,7 +30,7 @@ class YoutubeAudioRepository(IAudioRepository):
         self._download_directory_path = download_directory_path
 
     async def get_audio_from_source(self, source_id: str) -> Audio:
-        self._log.debug(f'Getting audio from YouTube video ID \'{source_id}\'...')
+        self._log.debug(f'Getting audio from YouTube video \'{source_id}\'...')
         audio: Audio = Audio(
             source_id=source_id,
             file_path=self._download_directory_path.joinpath(f'{source_id}.{self._file_extension}'),
@@ -39,7 +39,7 @@ class YoutubeAudioRepository(IAudioRepository):
         )
         if not audio.file_path.exists():
             await asyncio.to_thread(self._download_audio_from_youtube, video_id=source_id)
-        self._log.debug(f'Audio from YouTube video ID \'{source_id}\' retrieved')
+        self._log.debug(f'Audio from YouTube video \'{source_id}\' retrieved')
         return audio
 
     def _download_audio_from_youtube(self, video_id: str) -> None:

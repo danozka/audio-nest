@@ -12,7 +12,7 @@ from authentication.authentication_service import AuthenticationService
 
 
 log: Logger = logging.getLogger(__name__)
-router: APIRouter = APIRouter(prefix='/api/auth', tags=['auth'])
+router: APIRouter = APIRouter(prefix='/api/auth')
 oauth2_scheme: OAuth2PasswordBearer = OAuth2PasswordBearer(tokenUrl='api/auth/token')
 
 
