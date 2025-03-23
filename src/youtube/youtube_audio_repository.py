@@ -3,7 +3,6 @@ import logging
 from logging import Logger
 from pathlib import Path
 from typing import Any
-from uuid import uuid4
 
 from yt_dlp import YoutubeDL
 from yt_dlp.postprocessor.ffmpeg import ACODECS
@@ -33,7 +32,6 @@ class YoutubeAudioRepository(IAudioRepository):
     async def get_audio_from_source(self, source_id: str) -> Audio:
         self._log.debug(f'Getting audio from YouTube video ID \'{source_id}\'...')
         audio: Audio = Audio(
-            id=uuid4(),
             source_id=source_id,
             file_path=self._download_directory_path.joinpath(f'{source_id}.{self._file_extension}'),
             bit_rate_kbps=self._bit_rate_kbps,
