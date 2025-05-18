@@ -1,3 +1,11 @@
+# Backend
+__pycache__/
+.pytest_cache/
+.venv/
+data/
+.coverage
+.coverage.*
+
 # Compiled output
 /dist
 /tmp
