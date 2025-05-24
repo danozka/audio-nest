@@ -15,7 +15,7 @@ class UserAudioAdder:
 
     async def add_user_audio(self, user_audio: UserAudio) -> None:
         self._log.debug(f'Adding {user_audio}...')
-        if await self._user_audio_repository.get_user_audio_from_source(user_audio.source_id):
+        if await self._user_audio_repository.get_user_audio_from_source(user_audio.source_id) is not None:
             raise UserAudioAlreadyAddedException(user_audio)
         await self._user_audio_repository.add_user_audio(user_audio)
         self._log.debug(f'{user_audio} added')

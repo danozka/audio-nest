@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from uuid import UUID
 
 from audio_nest.domain.audio import Audio
@@ -8,5 +8,4 @@ from audio_nest.domain.audio import Audio
 class UserAudio(Audio):
     id: UUID
     user_id: UUID
-    title: str = field(repr=False)
-    artist: str | None = field(default=None, repr=False)
+    audio_name: str

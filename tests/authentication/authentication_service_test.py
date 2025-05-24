@@ -3,12 +3,12 @@ from unittest.mock import AsyncMock, Mock
 import pytest
 from passlib.context import CryptContext
 
-from audio_nest.domain.user import User
+from authentication.domain.user import User
 from audio_nest.services.i_users_repository import IUsersRepository
 from authentication.authentication_service import AuthenticationService
 from authentication.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
 from authentication.exceptions.user_already_registered_exception import UserAlreadyRegisteredException
-from authentication.json_web_token_handler import JsonWebTokenHandler
+from authentication.services.json_web_token_handler import JsonWebTokenHandler
 
 
 @pytest.fixture(scope='function')
@@ -28,8 +28,8 @@ def password_context_mock() -> Mock:
 
 @pytest.fixture(scope='function')
 def authentication_service(
-    json_web_token_handler_mock: Mock, 
-    users_repository_mock: AsyncMock, 
+    json_web_token_handler_mock: Mock,
+    users_repository_mock: AsyncMock,
     password_context_mock: Mock
 ) -> AuthenticationService:
     return AuthenticationService(
@@ -41,8 +41,8 @@ def authentication_service(
 
 @pytest.mark.asyncio
 async def test_user_is_registered(
-    authentication_service: AuthenticationService, 
-    users_repository_mock: AsyncMock, 
+    authentication_service: AuthenticationService,
+    users_repository_mock: AsyncMock,
     password_context_mock: Mock
 ) -> None:
     test_email: str = 'test@example.com'

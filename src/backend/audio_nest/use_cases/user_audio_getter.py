@@ -1,9 +1,9 @@
 import logging
 from logging import Logger
+from uuid import UUID
 
 from audio_nest.services.i_user_audio_repository import IUserAudioRepository
 from audio_nest.domain.user_audio import UserAudio
-from audio_nest.exceptions.user_audio_already_added_exception import UserAudioAlreadyAddedException
 
 
 class UserAudioGetter:
@@ -13,9 +13,8 @@ class UserAudioGetter:
     def __init__(self, user_audio_repository: IUserAudioRepository) -> None:
         self._user_audio_repository = user_audio_repository
 
-    async def get_user_audio_list(self, user_audio: UserAudio) -> list[UserAudio]:
-        self._log.debug(f'Adding {user_audio}...')
-        if await self._user_audio_repository.get_user_audio_from_source(user_audio.source_id):
-            raise UserAudioAlreadyAddedException(user_audio)
-        await self._user_audio_repository.add_user_audio(user_audio)
-        self._log.debug(f'{user_audio} added')
+    async def get_user_audio_list(self, user_id: UUID) -> list[UserAudio]:
+        self._log.debug(f'Getting user \'{user_id}\' audio list...')
+        user_audio_list: list[UserAudio] = await self._user_audio_repository.get_user_audio_list(user_id)
+        self._log.debug(f'User \'{user_id}\' audio list retrieved')
+        return user_audio_list

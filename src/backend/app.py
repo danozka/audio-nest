@@ -1,4 +1,6 @@
+import logging
 from contextlib import asynccontextmanager
+from logging import Logger
 from typing import AsyncGenerator
 
 import uvicorn
@@ -11,6 +13,7 @@ from container import Container
 
 
 class App(FastAPI):
+    _log: Logger = logging.getLogger(__name__)
     _container: Container
 
     def __init__(self, container: Container) -> None:
@@ -43,6 +46,9 @@ class App(FastAPI):
 
     @asynccontextmanager
     async def _handle_resources(self, app: FastAPI) -> AsyncGenerator[None, None]:
+        self._log.info('Initializing application resources...')
         await self._container.sql_session_maker.init()
         yield
+        self._log.info('Shutting down application resources...')
         await self._container.sql_session_maker.shutdown()
+        self._log.info('Application resources shut down')

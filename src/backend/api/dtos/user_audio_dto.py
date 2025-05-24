@@ -6,6 +6,5 @@ from api.dtos.base_dto import BaseDto
 
 
 class UserAudioDto(BaseDto):
-    title: str = Field(repr=False)
-    artist: str | None = Field(default=None, repr=False)
+    audio_name: str
     id: UUID = Field(default_factory=uuid4)

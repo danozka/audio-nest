@@ -14,6 +14,6 @@ class AudioSourcesGetter:
 
     async def get_audio_sources(self, search_query: str) -> list[AudioSource]:
         self._log.debug(f'Getting audio sources for search query \'{search_query}\'...')
-        result: list[AudioSource] = await self._audio_sources_repository.get_audio_sources(search_query)
+        audio_sources: list[AudioSource] = await self._audio_sources_repository.get_audio_sources(search_query)
         self._log.debug(f'Audio sources for search query \'{search_query}\' retrieved')
-        return result
+        return audio_sources

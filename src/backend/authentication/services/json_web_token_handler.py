@@ -1,10 +1,13 @@
+import logging
 from datetime import datetime, timedelta, timezone
+from logging import Logger
 
 import jwt
 from jwt.exceptions import PyJWTError
 
 
 class JsonWebTokenHandler:
+    _log: Logger = logging.getLogger(__name__)
     _secret_key: str
     _algorithm: str
     _expiration_days: int
@@ -15,7 +18,8 @@ class JsonWebTokenHandler:
         self._expiration_days = expiration_days
 
     def create_access_token(self, subject: str) -> str:
-        return jwt.encode(
+        self._log.debug(f'Creating access token for subject \'{subject}\'...')
+        access_token: str = jwt.encode(
             payload={
                 'sub': subject,
                 'exp': (datetime.now(timezone.utc) + timedelta(days=self._expiration_days))
@@ -23,10 +27,15 @@ class JsonWebTokenHandler:
             key=self._secret_key,
             algorithm=self._algorithm
         )
+        self._log.debug(f'Access token for subject \'{subject}\' created')
+        return access_token
 
     def decode_access_token(self, token: str) -> str | None:
+        self._log.debug('Decoding access token...')
         try:
             payload: dict[str, str | int] = jwt.decode(jwt=token, key=self._secret_key, algorithms=[self._algorithm])
-            return payload.get('sub')
+            subject: str | None = payload.get('sub')
+            self._log.debug(f'Access token decoded with subject \'{subject}\'')
+            return subject
         except PyJWTError:
             return None

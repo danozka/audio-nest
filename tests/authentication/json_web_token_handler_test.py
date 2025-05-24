@@ -1,6 +1,6 @@
 import pytest
 
-from authentication.json_web_token_handler import JsonWebTokenHandler
+from authentication.services.json_web_token_handler import JsonWebTokenHandler
 
 
 @pytest.fixture(scope='function')

@@ -1,4 +1,7 @@
+import logging
+from logging import Logger
 from pathlib import Path
+from typing import Sequence
 from uuid import UUID
 
 from sqlalchemy import select
@@ -11,12 +14,14 @@ from sql.domain.sql_user_audio import SqlUserAudio
 
 
 class SqlUserAudioRepository(IUserAudioRepository):
+    _log: Logger = logging.getLogger(__name__)
     _sql_session_maker: async_sessionmaker[AsyncSession]
 
     def __init__(self, sql_session_maker: async_sessionmaker[AsyncSession]) -> None:
         self._sql_session_maker = sql_session_maker
 
     async def add_user_audio(self, user_audio: UserAudio) -> None:
+        self._log.debug(f'Adding {user_audio}...')
         session: AsyncSession
         async with self._sql_session_maker() as session:
             async with session.begin():
@@ -24,31 +29,56 @@ class SqlUserAudioRepository(IUserAudioRepository):
                     SqlUserAudio(
                         id=str(user_audio.id),
                         user_id=str(user_audio.user_id),
-                        title=user_audio.title,
-                        artist=user_audio.artist,
+                        audio_name=user_audio.audio_name,
                         source_id=user_audio.source_id,
                         file_path=str(user_audio.file_path),
                         bit_rate_kbps=user_audio.bit_rate_kbps,
                         codec=user_audio.codec
                     )
                 )
+        self._log.debug(f'{user_audio} added')
 
     async def get_user_audio_from_source(self, source_id: str) -> UserAudio | None:
+        self._log.debug(f'Getting user audio from source \'{source_id}\'...')
         session: AsyncSession
         async with self._sql_session_maker() as session:
             sql_user_audio: SqlUserAudio | None = (
                 await session.scalars(select(SqlUserAudio).where(SqlUserAudio.source_id == source_id))
             ).first()
-        result: UserAudio | None = None
+        user_audio: UserAudio | None = None
         if sql_user_audio:
-            result = UserAudio(
+            user_audio = UserAudio(
                 id=UUID(sql_user_audio.id),
                 user_id=UUID(sql_user_audio.user_id),
-                title=sql_user_audio.title,
-                artist=sql_user_audio.artist,
+                audio_name=sql_user_audio.audio_name,
                 source_id=sql_user_audio.source_id,
                 file_path=Path(sql_user_audio.file_path),
                 bit_rate_kbps=sql_user_audio.bit_rate_kbps,
                 codec=AudioCodec(sql_user_audio.codec)
             )
-        return result
+        self._log.debug(f'User audio from source \'{source_id}\' retrieved')
+        return user_audio
+
+    async def get_user_audio_list(self, user_id: UUID) -> list[UserAudio]:
+        self._log.debug(f'Getting user audio list for user \'{user_id}\'...')
+        session: AsyncSession
+        async with self._sql_session_maker() as session:
+            sql_user_audio_list: Sequence[SqlUserAudio] = (
+                await session.scalars(select(SqlUserAudio).where(SqlUserAudio.user_id == str(user_id)))
+            ).all()
+        user_audio_list: list[UserAudio] = []
+        sql_user_audio: SqlUserAudio
+        for sql_user_audio in sql_user_audio_list:
+            user_audio_list.append(
+                UserAudio(
+                    id=UUID(sql_user_audio.id),
+                    user_id=UUID(sql_user_audio.user_id),
+                    audio_name=sql_user_audio.audio_name,
+                    source_id=sql_user_audio.source_id,
+                    file_path=Path(sql_user_audio.file_path),
+                    bit_rate_kbps=sql_user_audio.bit_rate_kbps,
+                    codec=AudioCodec(sql_user_audio.codec)
+                )
+            )
+        self._log.debug(f'User audio list for user \'{user_id}\' retrieved')
+        return user_audio_list

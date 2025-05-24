@@ -9,14 +9,7 @@ class AudioSourcesAdapter:
     _log: Logger = logging.getLogger(__name__)
 
     def adapt_audio_sources(self, audio_sources: list[AudioSource]) -> list[AudioSourceDto]:
-        self._log.debug('Adapting audio sources...')
-        result: list[AudioSourceDto] = [
-            AudioSourceDto(
-                id=audio_source.id,
-                name=audio_source.name,
-                thumbnail_url=audio_source.thumbnail_url
-            )
-            for audio_source in audio_sources
-        ]
-        self._log.debug('Audio sources adapted')
+        self._log.debug(f'Adapting {audio_sources}...')
+        result: list[AudioSourceDto] = [AudioSourceDto.model_validate(x.__dict__) for x in audio_sources]
+        self._log.debug(f'{audio_sources} adapted')
         return result

@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 
-from audio_nest.domain.user import User
+from authentication.domain.user import User
 
 
 class IUsersRepository(ABC):
     @abstractmethod
     async def get_user_by_email(self, email: str) -> User | None:
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     async def create_user(self, user: User) -> None:
-        raise NotImplementedError
+        pass
