@@ -1,11 +1,11 @@
-from dataclasses import dataclass
-from uuid import UUID
+from dataclasses import dataclass, field
+from uuid import UUID, uuid4
 
 from audio_nest.domain.audio import Audio
 
 
 @dataclass
 class UserAudio(Audio):
-    id: UUID
     user_id: UUID
     audio_name: str
+    id: UUID = field(default_factory=uuid4)

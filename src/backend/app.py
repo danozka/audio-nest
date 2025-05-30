@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api import routers
-from api.routers import authentication, sources
+from api.routers import authentication, sources, user_audio
 from container import Container
 
 
@@ -35,6 +35,7 @@ class App(FastAPI):
         )
         self.include_router(authentication.router)
         self.include_router(sources.router)
+        self.include_router(user_audio.router)
 
     def run(self) -> None:
         uvicorn.run(

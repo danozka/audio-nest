@@ -38,4 +38,5 @@ class JsonWebTokenHandler:
             self._log.debug(f'Access token decoded with subject \'{subject}\'')
             return subject
         except PyJWTError:
+            self._log.debug('Access token decoding failed')
             return None

@@ -9,10 +9,10 @@ from yt_dlp.postprocessor.ffmpeg import ACODECS
 
 from audio_nest.domain.audio import Audio
 from audio_nest.domain.audio_codec import AudioCodec
-from audio_nest.services.i_audio_repository import IAudioRepository
+from audio_nest.services.i_audio_downloader import IAudioDownloader
 
 
-class YoutubeAudioRepository(IAudioRepository):
+class YoutubeAudioDownloader(IAudioDownloader):
     _log: Logger = logging.getLogger(__name__)
     _url_template: str = 'https://www.youtube.com/watch?v={video_id}'
     _output_file_template: str = '{output_file_path}.%(ext)s'
@@ -29,17 +29,16 @@ class YoutubeAudioRepository(IAudioRepository):
         self._ffmpeg_path = ffmpeg_path
         self._download_directory_path = download_directory_path
 
-    async def get_audio_from_source(self, source_id: str) -> Audio:
-        self._log.debug(f'Getting audio from YouTube video \'{source_id}\'...')
+    async def download_audio_from_source(self, source_id: str) -> Audio:
+        self._log.debug(f'Downloading audio from YouTube video \'{source_id}\'...')
+        await asyncio.to_thread(self._download_audio_from_youtube, video_id=source_id)
         audio: Audio = Audio(
             source_id=source_id,
             file_path=self._download_directory_path.joinpath(f'{source_id}.{self._file_extension}'),
             bit_rate_kbps=self._bit_rate_kbps,
             codec=self._codec
         )
-        if not audio.file_path.exists():
-            await asyncio.to_thread(self._download_audio_from_youtube, video_id=source_id)
-        self._log.debug(f'Audio from YouTube video \'{source_id}\' retrieved')
+        self._log.debug(f'Audio from YouTube video \'{source_id}\' downloaded')
         return audio
 
     def _download_audio_from_youtube(self, video_id: str) -> None:

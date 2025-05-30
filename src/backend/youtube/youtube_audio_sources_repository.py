@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from logging import Logger
-from typing import TypeAlias
+from typing import TypedDict
 
 from youtube_search import YoutubeSearch
 
@@ -9,7 +9,7 @@ from audio_nest.services.i_audio_sources_repository import IAudioSourcesReposito
 from audio_nest.domain.audio_source import AudioSource
 
 
-YoutubeVideo: TypeAlias = dict[str, str | list[str]]
+YoutubeVideo = TypedDict('YoutubeVideo', {'id': str, 'title': str, 'thumbnails': list[str]})
 
 
 class YoutubeAudioSourcesRepository(IAudioSourcesRepository):

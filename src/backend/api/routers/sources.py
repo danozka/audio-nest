@@ -5,7 +5,6 @@ from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
 
-from adapters.audio_sources_adapter import AudioSourcesAdapter
 from api.dtos.audio_source_dto import AudioSourceDto
 from api.dtos.user_audio_dto import UserAudioDto
 from api.routers.authentication import oauth2_scheme
@@ -32,12 +31,12 @@ async def get_audio_sources(
 ) -> list[AudioSourceDto]:
     log.info(f'Getting audio sources for search query \'{search_query}\'...')
     try:
-        audio_sources_adapter: AudioSourcesAdapter = AudioSourcesAdapter()
-        result: list[AudioSourceDto] = audio_sources_adapter.adapt_audio_sources(
-            await audio_sources_getter.get_audio_sources(search_query)
-        )
+        audio_sources: list[AudioSourceDto] = [
+            AudioSourceDto.model_validate(audio_source.__dict__)
+            for audio_source in await audio_sources_getter.get_audio_sources(search_query)
+        ]
         log.info(f'Audio sources for search query \'{search_query}\' retrieved')
-        return result
+        return audio_sources
     except Exception as ex:
         log.error(
             f'Exception found while getting audio sources for search query \'{search_query}\': '
@@ -77,7 +76,6 @@ async def add_user_audio_from_source(
         user: User = await user_getter.get_user_from_access_token(token)
         audio: Audio = await audio_getter.get_audio_from_source(source_id)
         user_audio: UserAudio = UserAudio(
-            id=user_audio_dto.id,
             user_id=user.id,
             audio_name=user_audio_dto.audio_name,
             source_id=audio.source_id,
