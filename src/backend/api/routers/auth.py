@@ -6,10 +6,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from api.dtos.authentication_token_dto import AuthenticationTokenDto
-from authentication.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
-from authentication.exceptions.user_already_registered_exception import UserAlreadyRegisteredException
-from authentication.use_cases.user_login_handler import UserLoginHandler
-from authentication.use_cases.user_registration_handler import UserRegistrationHandler
+from auth.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
+from auth.exceptions.user_already_registered_exception import UserAlreadyRegisteredException
+from auth.use_cases.user_login_handler import UserLoginHandler
+from auth.use_cases.user_registration_handler import UserRegistrationHandler
 
 
 log: Logger = logging.getLogger(__name__)

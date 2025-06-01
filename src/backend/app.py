@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api import routers
-from api.routers import authentication, sources, user_audio
+from api.routers import auth, sources, user_audio
 from container import Container
 
 
@@ -33,7 +33,7 @@ class App(FastAPI):
             allow_methods=['*'],
             allow_headers=['*']
         )
-        self.include_router(authentication.router)
+        self.include_router(auth.router)
         self.include_router(sources.router)
         self.include_router(user_audio.router)
 

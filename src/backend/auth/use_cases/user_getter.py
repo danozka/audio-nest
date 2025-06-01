@@ -1,10 +1,10 @@
 import logging
 from logging import Logger
 
-from authentication.domain.user import User
-from authentication.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
-from authentication.services.i_users_repository import IUsersRepository
-from authentication.services.json_web_token_handler import JsonWebTokenHandler
+from auth.domain.user import User
+from auth.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
+from auth.services.i_users_repository import IUsersRepository
+from auth.services.json_web_token_handler import JsonWebTokenHandler
 
 
 class UserGetter:

@@ -4,9 +4,9 @@ import pytest
 from fastapi.testclient import TestClient
 from httpx import Response
 
-from authentication.authentication_service import AuthenticationService
-from authentication.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
-from authentication.exceptions.user_already_registered_exception import UserAlreadyRegisteredException
+from auth.authentication_service import AuthenticationService
+from auth.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
+from auth.exceptions.user_already_registered_exception import UserAlreadyRegisteredException
 from container import Container
 
 

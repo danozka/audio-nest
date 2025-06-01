@@ -11,10 +11,10 @@ from audio_nest.use_cases.user_audio_adder import UserAudioAdder
 from audio_nest.use_cases.user_audio_deleter import UserAudioDeleter
 from audio_nest.use_cases.user_audio_getter import UserAudioGetter
 from audio_nest.use_cases.user_audio_list_getter import UserAudioListGetter
-from authentication.services.json_web_token_handler import JsonWebTokenHandler
-from authentication.use_cases.user_getter import UserGetter
-from authentication.use_cases.user_login_handler import UserLoginHandler
-from authentication.use_cases.user_registration_handler import UserRegistrationHandler
+from auth.services.json_web_token_handler import JsonWebTokenHandler
+from auth.use_cases.user_getter import UserGetter
+from auth.use_cases.user_login_handler import UserLoginHandler
+from auth.use_cases.user_registration_handler import UserRegistrationHandler
 from settings import Settings
 from sql.sql_audio_repository import SqlAudioRepository
 from sql.sql_session_maker_handler import handle_sql_session_maker

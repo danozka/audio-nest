@@ -7,15 +7,15 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
 
 from api.dtos.user_audio_dto import UserAudioDto
-from api.routers.authentication import oauth2_scheme
+from api.routers.auth import oauth2_scheme
 from audio_nest.domain.user_audio import UserAudio
 from audio_nest.exceptions.user_audio_not_found_exception import UserAudioNotFoundException
 from audio_nest.use_cases.user_audio_deleter import UserAudioDeleter
 from audio_nest.use_cases.user_audio_getter import UserAudioGetter
 from audio_nest.use_cases.user_audio_list_getter import UserAudioListGetter
-from authentication.domain.user import User
-from authentication.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
-from authentication.use_cases.user_getter import UserGetter
+from auth.domain.user import User
+from auth.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
+from auth.use_cases.user_getter import UserGetter
 
 
 log: Logger = logging.getLogger(__name__)

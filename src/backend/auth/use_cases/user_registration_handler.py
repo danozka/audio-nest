@@ -1,10 +1,10 @@
 import logging
 from logging import Logger
 
-from authentication.domain.user import User
-from authentication.exceptions.user_already_registered_exception import UserAlreadyRegisteredException
-from authentication.services.i_users_repository import IUsersRepository
-from authentication.services.password_hasher import PasswordHasher
+from auth.domain.user import User
+from auth.exceptions.user_already_registered_exception import UserAlreadyRegisteredException
+from auth.services.i_users_repository import IUsersRepository
+from auth.services.password_hasher import PasswordHasher
 
 
 class UserRegistrationHandler:

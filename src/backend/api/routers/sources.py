@@ -7,16 +7,16 @@ from fastapi.responses import FileResponse
 
 from api.dtos.audio_source_dto import AudioSourceDto
 from api.dtos.user_audio_dto import UserAudioDto
-from api.routers.authentication import oauth2_scheme
+from api.routers.auth import oauth2_scheme
 from audio_nest.domain.audio import Audio
 from audio_nest.domain.user_audio import UserAudio
 from audio_nest.exceptions.user_audio_already_added_exception import UserAudioAlreadyAddedException
 from audio_nest.use_cases.audio_getter import AudioGetter
 from audio_nest.use_cases.audio_sources_getter import AudioSourcesGetter
 from audio_nest.use_cases.user_audio_adder import UserAudioAdder
-from authentication.domain.user import User
-from authentication.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
-from authentication.use_cases.user_getter import UserGetter
+from auth.domain.user import User
+from auth.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
+from auth.use_cases.user_getter import UserGetter
 
 
 log: Logger = logging.getLogger(__name__)

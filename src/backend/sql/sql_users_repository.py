@@ -5,8 +5,8 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from authentication.domain.user import User
-from authentication.services.i_users_repository import IUsersRepository
+from auth.domain.user import User
+from auth.services.i_users_repository import IUsersRepository
 from sql.domain.sql_user import SqlUser
 
 

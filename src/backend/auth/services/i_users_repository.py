@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from authentication.domain.user import User
+from auth.domain.user import User
 
 
 class IUsersRepository(ABC):

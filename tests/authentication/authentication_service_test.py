@@ -3,12 +3,12 @@ from unittest.mock import AsyncMock, Mock
 import pytest
 from passlib.context import CryptContext
 
-from authentication.domain.user import User
+from auth.domain.user import User
 from audio_nest.services.i_users_repository import IUsersRepository
-from authentication.authentication_service import AuthenticationService
-from authentication.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
-from authentication.exceptions.user_already_registered_exception import UserAlreadyRegisteredException
-from authentication.services.json_web_token_handler import JsonWebTokenHandler
+from auth.authentication_service import AuthenticationService
+from auth.exceptions.invalid_user_credentials_exception import InvalidUserCredentialsException
+from auth.exceptions.user_already_registered_exception import UserAlreadyRegisteredException
+from auth.services.json_web_token_handler import JsonWebTokenHandler
 
 
 @pytest.fixture(scope='function')
