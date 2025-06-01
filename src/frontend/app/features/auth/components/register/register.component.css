@@ -1,0 +1,79 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.register-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.submit-button {
+  width: 100%;
+  height: 48px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.login-link {
+  text-align: center;
+  margin: 0;
+  color: #666;
+}
+
+.login-link button {
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* Material Design form field customizations */
+.mat-mdc-form-field {
+  --mdc-filled-text-field-focus-active-indicator-color: #667eea;
+  --mdc-filled-text-field-focus-label-text-color: #667eea;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .register-container {
+    padding: 10px;
+  }
+
+  .register-card {
+    padding: 16px;
+  }
+}
+
+/* Loading state styles */
+.submit-button:disabled {
+  opacity: 0.7;
+}
+
+/* Error state styles */
+.mat-mdc-form-field.mat-form-field-invalid .mat-mdc-text-field-wrapper {
+  border-color: #f44336;
+}
