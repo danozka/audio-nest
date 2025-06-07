@@ -3,7 +3,6 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
 }
 
@@ -13,35 +12,30 @@
   padding: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.95);
+}
+
+.login-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .login-title {
-  text-align: center;
-  color: #333;
+  color: white;
   font-weight: 600;
-  margin-bottom: 8px;
-}
-
-mat-card-subtitle {
-  text-align: center;
-  color: #666;
-  margin-bottom: 20px;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
+  margin-top: 40px;
 }
 
 .full-width {
   width: 100%;
-}
-
-.checkbox-container {
-  margin: 8px 0;
 }
 
 .login-button {
@@ -70,9 +64,9 @@ mat-card-subtitle {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  border-top: 1px solid white;
+  margin-top: 26px;
   padding-top: 16px;
-  border-top: 1px solid #e0e0e0;
-  margin-top: 16px;
 }
 
 .login-actions button {
@@ -80,7 +74,6 @@ mat-card-subtitle {
   justify-content: center;
 }
 
-/* Responsive design */
 @media (max-width: 480px) {
   .login-container {
     padding: 16px;
@@ -91,7 +84,6 @@ mat-card-subtitle {
   }
 }
 
-/* Material form field customizations */
 ::ng-deep .mat-mdc-form-field {
   margin-bottom: 8px;
 }
@@ -100,7 +92,6 @@ mat-card-subtitle {
   font-size: 12px;
 }
 
-/* Custom focus styles */
 ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-outline-thick {
   color: #667eea;
 }

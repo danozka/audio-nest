@@ -4,7 +4,6 @@
   align-items: center;
   min-height: 100vh;
   padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .register-card {
@@ -15,52 +14,67 @@
   border-radius: 16px;
 }
 
+.register-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.register-title {
+  color: white;
+  font-weight: 600;
+}
+
 .register-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
-.form-field {
+.full-width {
   width: 100%;
 }
 
 .submit-button {
-  width: 100%;
   height: 48px;
-  margin-top: 20px;
   font-size: 16px;
   font-weight: 500;
+  border-radius: 8px;
 }
 
-.card-actions {
+.submit-button[disabled] {
+  opacity: 0.7;
+}
+
+.submit-button mat-icon {
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.register-actions {
   display: flex;
+  flex-direction: column;
+  border-top: 1px solid white;
+  margin-top: 26px;
+  padding-top: 16px;
+}
+
+.register-actions button {
+  width: 100%;
   justify-content: center;
-  padding-top: 20px;
 }
 
-.login-link {
-  text-align: center;
-  margin: 0;
-  color: #666;
-}
-
-.login-link button {
-  font-weight: 500;
-  text-decoration: none;
-}
-
-/* Material Design form field customizations */
-.mat-mdc-form-field {
-  --mdc-filled-text-field-focus-active-indicator-color: #667eea;
-  --mdc-filled-text-field-focus-label-text-color: #667eea;
-}
-
-/* Responsive design */
 @media (max-width: 480px) {
   .register-container {
-    padding: 10px;
+    padding: 16px;
   }
 
   .register-card {
@@ -68,12 +82,19 @@
   }
 }
 
-/* Loading state styles */
-.submit-button:disabled {
-  opacity: 0.7;
+
+::ng-deep .mat-mdc-form-field {
+  margin-bottom: 8px;
 }
 
-/* Error state styles */
-.mat-mdc-form-field.mat-form-field-invalid .mat-mdc-text-field-wrapper {
-  border-color: #f44336;
+::ng-deep .mat-mdc-form-field-error {
+  font-size: 12px;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-outline-thick {
+  color: #667eea;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mdc-floating-label {
+  color: #667eea;
 }

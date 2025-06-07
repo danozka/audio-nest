@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { AuthService } from '../../services/auth.service';
-import { RegisterRequest } from '../../models/register-request.model';
 
 @Component({
   selector: 'app-register',
@@ -36,11 +34,9 @@ export class RegisterComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService,
     private snackBar: MatSnackBar
   ) {
     this.registerForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
@@ -66,38 +62,22 @@ export class RegisterComponent {
     return null;
   }
 
-  onFormSubmit() {
+  onSubmit() {
     if (this.registerForm.valid) {
       this.isLoading = true;
 
-      const registerData: RegisterRequest = {
-        username: this.registerForm.value.username,
-        email: this.registerForm.value.email,
-        password: this.registerForm.value.password
-      };
+      // Simulate register API call
+      setTimeout(() => {
+        const formData = this.registerForm.value;
+        console.log('Registration attempt:', formData);
 
-      this.authService.register(registerData).subscribe({
-        next: (response) => {
-          this.isLoading = false;
-          this.snackBar.open('Registration successful! You are now logged in.', 'Close', {
-            duration: 5000,
-            panelClass: ['success-snackbar']
-          });
-          // Navigation will be handled by auth service after successful registration
-          this.router.navigate(['/dashboard']).catch(error => {
-            console.error('Navigation failed:', error);
-          });
-        },
-        error: (error) => {
-          this.isLoading = false;
-          const errorMessage = error.message || 'Registration failed. Please try again.';
-          this.snackBar.open(errorMessage, 'Close', {
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
-          console.error('Registration error:', error);
-        }
-      });
+        // Here you would typically call your authentication service
+        // For now, we'll just simulate a successful register
+        this.isLoading = false;
+
+        // Navigate to dashboard or home page after successful register
+        // this.router.navigate(['/dashboard']);
+      }, 2000);
     } else {
       this.markFormGroupTouched();
     }
@@ -105,12 +85,11 @@ export class RegisterComponent {
 
   private markFormGroupTouched() {
     Object.keys(this.registerForm.controls).forEach(key => {
-      const control = this.registerForm.get(key);
-      control?.markAsTouched();
+      this.registerForm.get(key)?.markAsTouched();
     });
   }
 
-  navigateToLogin() {
+  onSingIn(): void {
     this.router.navigate(['/auth/login']).catch((error) => {
       console.error('Navigation to login page failed:', error);
     });
@@ -141,10 +120,9 @@ export class RegisterComponent {
 
   private getFieldDisplayName(field: string): string {
     const fieldNames: { [key: string]: string } = {
-      username: 'Username',
       email: 'Email',
       password: 'Password',
-      confirmPassword: 'Confirm Password'
+      confirmPassword: 'Password confirmation'
     };
     return fieldNames[field] || field;
   }

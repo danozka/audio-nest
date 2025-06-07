@@ -36,7 +36,7 @@ export class LoginComponent {
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required]],
       rememberMe: [false]
     });
   }
@@ -56,8 +56,6 @@ export class LoginComponent {
 
         // Navigate to dashboard or home page after successful login
         // this.router.navigate(['/dashboard']);
-
-        alert('Login successful! (This is just a demo)');
       }, 2000);
     } else {
       this.markFormGroupTouched();
@@ -70,34 +68,29 @@ export class LoginComponent {
     });
   }
 
-  getEmailErrorMessage(): string {
-    const emailControl = this.loginForm.get('email');
-    if (emailControl?.hasError('required')) {
-      return 'Email is required';
+  getErrorMessage(field: string): string {
+    const control = this.loginForm.get(field);
+
+    if (control?.hasError('required')) {
+      return `${this.getFieldDisplayName(field)} is required`;
     }
-    if (emailControl?.hasError('email')) {
+
+    if (control?.hasError('email')) {
       return 'Please enter a valid email address';
     }
+
     return '';
   }
 
-  getPasswordErrorMessage(): string {
-    const passwordControl = this.loginForm.get('password');
-    if (passwordControl?.hasError('required')) {
-      return 'Password is required';
-    }
-    if (passwordControl?.hasError('minlength')) {
-      return 'Password must be at least 6 characters long';
-    }
-    return '';
-  }
-
-  togglePasswordVisibility(): void {
-    this.hidePassword = !this.hidePassword;
+  private getFieldDisplayName(field: string): string {
+    const fieldNames: { [key: string]: string } = {
+      email: 'Email',
+      password: 'Password'
+    };
+    return fieldNames[field] || field;
   }
 
   onForgotPassword(): void {
-    // Navigate to forgot password page or show dialog
     console.log('Forgot password clicked');
     // this.router.navigate(['/forgot-password']);
   }
